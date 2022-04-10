@@ -1,0 +1,122 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #6622CC;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.row1{
+  position: relative;
+  top:-80px;
+  display: inline-block;
+  width: 0.8cm; 
+  height: 0.5cm; 
+  text-align: center;
+  border: gray;
+  background-color: #F18701;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.4cm;
+}
+.row2{
+  position: relative;
+  top:-80px;
+  display: inline-block;
+  width: 0.8cm; 
+  height: 0.5cm; 
+  text-align: center;
+  border: gray;
+  background-color: #F18701;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.4cm;
+}
+
+
+
+/*#demo{
+  text-align: left;
+  border: solid;
+  height: 4cm;
+  width: 20cm;
+  font-size: 20px;
+}*/
+#demo{
+  opacity: 0.75;
+}
+
+#demo:after {
+  content: '';
+  width: 12px;
+  height: 1px;
+  background: rgb(255, 255, 255);
+  opacity: 0;
+  display: inline-block;
+  animation: blink 1s linear infinite alternate;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#demo2{
+  position: relative;
+  left:-20px;
+  top:-80px;
+}
+
+#demo2 ul{
+  
+  
+  list-style: none;
+  font-size:20px;
+}
+#demo2 li{
+  display: inline;
+}
+
+#d2{
+  font-size:20px;
+  position: relative;
+  top:-20px;
+}
