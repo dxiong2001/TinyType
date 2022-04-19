@@ -1,7 +1,10 @@
 //import { useLongPress } from 'use-long-press';
 import './App.css';
 import useLongPress from './longPress'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
+const MySwal = withReactContent(Swal)
 
 
 var x = "";
@@ -11,6 +14,7 @@ var time1 = 0;
 var time2 = 0;
 var tempTime = 0;
 var m = []
+var cursor = 0;
 var keys = ["01","11","0201","0211","1201","1211","030201",
 "030211","031201","031211","130201","130211","131201","131211",
 "04030201", "04030211","04031201","04031211","04130201","04130211",
@@ -244,14 +248,14 @@ function handleClick(i) {
     if(x==="\xa0"){
       x="";
     }
-    if(s.length%60==0){
-      s+="\n"
-    }
+    
     if(i==="x"){
       if(s!==""){
-        s = s.substring(0,s.length-1);
+        cursor -= 1;
+        s  = s.slice(0, cursor) +  s.slice(cursor+1, s.length);
+        
         if(s.length-1<0){
-          s=""
+          s="\xa0"
           document.getElementById("demo").style.opacity = "0.75";
         }
         document.getElementById("demo").innerHTML = s;
@@ -259,16 +263,55 @@ function handleClick(i) {
       }
     }
     else if(i==="s"){
-      if(s!==""){
-        s+= "\xa0";
+      
+        cursor += 1;
+        
+        s  = s.slice(0, cursor-1) + "\xa0"+ s.slice(cursor-1, s.length);
+        
         document.getElementById("demo").innerHTML = s;
         console.log("test2")
+      
+    }
+    else if (i==="r"){
+      if(cursor < s.length){
+        s = s.replace("|", "");
+        cursor+=1;
+        s = s.slice(0, cursor) +"|"+ s.slice(cursor, s.length);
+        if(cursor===s.length-1){
+          s = s.replace("|", "");
+        }
+        document.getElementById("demo").innerHTML = s;
+        
+      }
+      
+
+    }
+    else if(i==="l"){
+      
+      if(cursor > 0){
+        s = s.replace("|", "");
+        cursor-=1;
+        s = s.slice(0, cursor) +"|"+ s.slice(cursor, s.length);
+        document.getElementById("demo").innerHTML = s;
       }
     }
+    else if(i==="i"){
+      
+      Swal.fire({
+        position: 'top-end',
+        icon: 'info',
+        
+        title: 'About TinyType',
+        html: 'TinyType is a keyboard free keyboard! <ul class="sw"><li>Use the \"o\" button to type out \n\".\" (short press) or \"-\" (long press) to form letters</li><li>To delete a character, short click on \"x\"</li><li>To move the cursor left, long press on \"x\"</li><li>To press space, short click on \"s\"</li><li>To move the cursor right, long press on \"s\"</li><li>To view info on TinyType, click on \"i\" (which you must have already done to get to this screen)</li><li>*Note: if the cursor is not displayed, then it means it is at the end of the type buffer</li><ul> ',
+        showConfirmButton: true,
+        allowOutsideClick: false,
+      })
+    }
+
     else if(i==="c"){
         
         s = s + mapKey(x);
-    
+
         document.getElementById("demo").style.opacity = "1";
         document.getElementById("demo").innerHTML = s;
         document.getElementById("demo2").innerHTML = "\xa0";
@@ -328,23 +371,40 @@ function App() {
     onClick: () => handleClick("."),
     onLongPress: () => handleClick("-"),
   });
+  const longPressProps1 = useLongPress({
+    onClick: () =>  handleClick("x"),
+    onLongPress: () => handleClick("l"),
+  });
+
+  const longPressProps2 = useLongPress({
+    onClick: () =>  handleClick("s"),
+    onLongPress: () => handleClick("r"),
+  });
+
+  const longPressProps3 = useLongPress({
+    onClick: () =>  handleClick("i"),
+    onLongPress: () => handleClick("i"),
+  });
+
   setInterval(function() {
     //console.log("test");
     time2 =  new Date().getTime() ;
-    if(time2-time1>1000 && time1 != 0 && time1 > tempTime){
-      s = s + mapKey(x);
+    if(time2-time1>500 && time1 != 0 && time1 > tempTime){
+      s.replace("|", "")
+      s  = s.slice(0, cursor) + mapKey(x)+ s.slice(cursor, s.length) ;
       document.getElementById("demo").style.opacity = "1";
       document.getElementById("demo").innerHTML = s;
       x="\xa0";
       document.getElementById("demo2").innerHTML = x;
       tempTime = time1;
+      cursor += 1;
     }
     
     
-    console.log(time1)
-    console.log(time2)
-    console.log("tt:"+tempTime)
-  }, 1000);
+    // console.log(time1)
+    // console.log(time2)
+    // console.log("tt:"+tempTime)
+  }, 500);
 
   return (
     <div className="App">
@@ -353,15 +413,16 @@ function App() {
         <h2>
           TinyType
         </h2>
-        <p id="demo"></p>
-        <p id="d2">Recommendations:</p>
-        <p><ul id = "demo2"><li><span>[]</span></li></ul></p>
+        <div id = "test"><p id="demo">Type something</p></div>
+        
+        <p><ul id = "demo2"><li><span>{"\xa0"}</span></li></ul></p>
         
         <div >
-          <button className="row1" id="btn8" onClick={() => handleClick("x")}>x</button>
+          <button className="row1" id="btn8" {...longPressProps1}>x</button>
           <button className="row1" id="btn2" {...longPressProps}>0</button>
           {/* <button className="row1" id="btn4" onClick={() => handleClick("c")}>c</button> */}
-          <button className="row1" id="btn4" onClick={() => handleClick("s")}>s</button>
+          <button className="row1" id="btn4" {...longPressProps2}>s</button>
+          <button className="row1" id="btn4" {...longPressProps3}>i</button>
           {/* <button className="row2" id="btn8" onClick={() => handleClick("x")}>x</button>
           <button className="row1" id="btn1" onClick={() => handleClick("04")}>0</button>
           <button className="row1" id="btn2" onClick={() => handleClick("03")}>0</button>

@@ -29,14 +29,7 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+
 
 .row1{
   position: relative;
@@ -96,14 +89,18 @@ li span {font-size:18px;}
   width: 20cm;
   font-size: 20px;
 }*/
+
+#test{
+  display: table-cell;
+}
 #demo{
   opacity: 0.75;
 }
 
-#demo:after {
+/* #demo:after {
   content: '';
-  width: 12px;
-  height: 1px;
+  width: 1px;
+  height: 12px;
   background: rgb(255, 255, 255);
   opacity: 0;
   display: inline-block;
@@ -117,7 +114,7 @@ li span {font-size:18px;}
   100% {
     opacity: 1;
   }
-}
+} */
 
 #demo2{
   position: relative;
@@ -139,4 +136,15 @@ li span {font-size:18px;}
   font-size:20px;
   position: relative;
   top:-20px;
+}
+
+.swal2-popup {
+  
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+}
+
+.sw {
+  font-size: 15px;
+  text-align: left;
 }
