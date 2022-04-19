@@ -1,11 +1,15 @@
-import logo from './logo.svg';
+//import { useLongPress } from 'use-long-press';
 import './App.css';
+import useLongPress from './longPress'
 
 
 
 var x = "";
 var s = "";
 var pressed = []
+var time1 = 0;
+var time2 = 0;
+var tempTime = 0;
 var m = []
 var keys = ["01","11","0201","0211","1201","1211","030201",
 "030211","031201","031211","130201","130211","131201","131211",
@@ -36,81 +40,114 @@ function match(i){
   console.log(m)
   return m;
 }
+
 function mapKey(i){
   switch(i){
-    case "0404":
-      if(s===""){
-        return "";
-      }
-      else{
-        x="";
-        return s.substring(s.length-1,s.length);
-      }
-    case "01":
-      return "E"
-    case "11":
-      return "T"
-    case "0201":
-      return "A"
-    case "0211":
-      return "I"
-    case "1201":
-      return "N"
-    case "1211":
-      return "O"
-    case "030201":
-      return "S"
-    case "030211":
-      return "H"
-    case "031201":
-      return "R"
-    case "031211":
-      return "D"
-    case "130201":
-      return "L"
-    case "130211":
-      return "U"
-    case "131201":
-      return "C"
-    case "131211":
-      return "M"
-    case "04030201":
-      return "F"
-    case "04030211":
-      return "W"
-    case "04031201":
-      return "Y"
-    case "04031211":
-      return "G"
-    case "04130201":
-      return "P"
-    case "04130211":
-      return "B"
-    case "04131201":
-      return "V"
-    case "04131211":
-      return "K"
-    case "14030201":
-      return "Q"
-    case "14030211":
-      return "J"
-    case "14031201":
-      return "X"
-    case "14031211":
-      return "Z"
-    case "14130201":
-      return "!"
-    case "14130211":
-      return ","
-    case "14131201":
-      return "."
-    case "14131211":
-      return "'"
-    default:
-      
-      return ""  
+    case '.-':     return 'a'
+    case '-...':   return 'b'
+    case '-.-.':   return 'c'
+    case '-..':    return 'd'
+    case '.':      return 'e'
+    case '..-.':   return 'f'
+    case '--.':    return 'g'
+    case '....':   return 'h'
+    case '..':     return 'i'
+    case '.---':   return 'j'
+    case '-.-':    return 'k'
+    case '.-..':   return 'l'
+    case '--':     return 'm'
+    case '-.':     return 'n'
+    case '---':    return 'o'
+    case '.--.':   return 'p'
+    case '--.-':   return 'q'
+    case '.-.':    return 'r'
+    case '...':    return 's'
+    case '-':      return 't'
+    case '..-':    return 'u'
+    case '...-':   return 'v'
+    case '.--':    return 'w'
+    case '-..-':   return 'x'
+    case '-.--':   return 'y'
+    case '--..':   return 'z'
+    default: return ''
   }
 }
+
+// function mapKey(i){
+//   switch(i){
+//     case "0404":
+//       if(s===""){
+//         return "";
+//       }
+//       else{
+//         x="";
+//         return s.substring(s.length-1,s.length);
+//       }
+//     case "01":
+//       return "E"
+//     case "11":
+//       return "T"
+//     case "0201":
+//       return "A"
+//     case "0211":
+//       return "I"
+//     case "1201":
+//       return "N"
+//     case "1211":
+//       return "O"
+//     case "030201":
+//       return "S"
+//     case "030211":
+//       return "H"
+//     case "031201":
+//       return "R"
+//     case "031211":
+//       return "D"
+//     case "130201":
+//       return "L"
+//     case "130211":
+//       return "U"
+//     case "131201":
+//       return "C"
+//     case "131211":
+//       return "M"
+//     case "04030201":
+//       return "F"
+//     case "04030211":
+//       return "W"
+//     case "04031201":
+//       return "Y"
+//     case "04031211":
+//       return "G"
+//     case "04130201":
+//       return "P"
+//     case "04130211":
+//       return "B"
+//     case "04131201":
+//       return "V"
+//     case "04131211":
+//       return "K"
+//     case "14030201":
+//       return "Q"
+//     case "14030211":
+//       return "J"
+//     case "14031201":
+//       return "X"
+//     case "14031211":
+//       return "Z"
+//     case "14130201":
+//       return "!"
+//     case "14130211":
+//       return ","
+//     case "14131201":
+//       return "."
+//     case "14131211":
+//       return "'"
+//     default:
+      
+//       return ""  
+//   }
+// }
 
 function mapBinary(i){
   switch(i){
@@ -204,6 +241,9 @@ function mapButton(i){
 }
 
 function handleClick(i) {
+    if(x==="\xa0"){
+      x="";
+    }
     if(s.length%60==0){
       s+="\n"
     }
@@ -225,40 +265,87 @@ function handleClick(i) {
         console.log("test2")
       }
     }
-    else{
-      
-      if(s===""){
-        s = "";
-      }
-      if(!pressed.includes(i))
-      {
-        pressed.push(i);
-        x = x + i;
-        s = s + mapKey(x);
+    else if(i==="c"){
         
+        s = s + mapKey(x);
+    
         document.getElementById("demo").style.opacity = "1";
         document.getElementById("demo").innerHTML = s;
-        document.getElementById(mapButton(i)).style.color = "#6622CC";
-        console.log("test1")
-        
-        
-        recommend(match(x));
-
-        if(i==="01" || i==="11"){
-          x = "";
-          document.getElementById("demo2").innerHTML = "\xa0";
-          for(let j = 0; j< pressed.length; j++){
-            console.log(pressed[j])
-            document.getElementById(mapButton(pressed[j])).style.color = "#fff";
-            
-          }
-          pressed=[];
-        }
+        document.getElementById("demo2").innerHTML = "\xa0";
+        x= "";
       }
+    else{
+      time1 = new Date().getTime() ;
+      x = x + i;
+      document.getElementById("demo2").innerHTML = x;
+      document.getElementById("demo").style.opacity = "1";
+      // console.log(time2)
+      // time2 =  new Date().getTime() ;
+      // if(time2-time1>3000 && time1 != 0){
+      //   s = s + mapKey(x);
+      //   document.getElementById("demo").style.opacity = "1";
+      //   document.getElementById("demo").innerHTML = s;
+      //   x="";
+      // }
+      // x = x + i;
+      // document.getElementById("demo2").innerHTML = x;
+      // time1 = time2;
+      // console.log(time1)
+      // if(s===""){
+      //   s = "";
+      // }
+      // if(!pressed.includes(i))
+      // {
+      //   pressed.push(i);
+      //   x = x + i;
+      //   s = s + mapKey(x);
+        
+      //   document.getElementById("demo").style.opacity = "1";
+      //   document.getElementById("demo").innerHTML = s;
+      //   document.getElementById(mapButton(i)).style.color = "#6622CC";
+      //   console.log("test1")
+        
+        
+      //   recommend(match(x));
+
+      //   if(i==="01" || i==="11"){
+      //     x = "";
+      //     document.getElementById("demo2").innerHTML = "\xa0";
+      //     for(let j = 0; j< pressed.length; j++){
+      //       console.log(pressed[j])
+      //       document.getElementById(mapButton(pressed[j])).style.color = "#fff";
+            
+      //     }
+      //     pressed=[];
+      //   }
+      // }
     }
 }
+
+
 function App() {
-  
+  const longPressProps = useLongPress({
+    onClick: () => handleClick("."),
+    onLongPress: () => handleClick("-"),
+  });
+  setInterval(function() {
+    //console.log("test");
+    time2 =  new Date().getTime() ;
+    if(time2-time1>1000 && time1 != 0 && time1 > tempTime){
+      s = s + mapKey(x);
+      document.getElementById("demo").style.opacity = "1";
+      document.getElementById("demo").innerHTML = s;
+      x="\xa0";
+      document.getElementById("demo2").innerHTML = x;
+      tempTime = time1;
+    }
+    
+    
+    console.log(time1)
+    console.log(time2)
+    console.log("tt:"+tempTime)
+  }, 1000);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -268,31 +355,66 @@ function App() {
         </h2>
         <p id="demo"></p>
         <p id="d2">Recommendations:</p>
-        <p><ul id = "demo2"><li>[]</li></ul></p>
+        <p><ul id = "demo2"><li><span>[]</span></li></ul></p>
         
         <div >
+          <button className="row1" id="btn8" onClick={() => handleClick("x")}>x</button>
+          <button className="row1" id="btn2" {...longPressProps}>0</button>
+          {/* <button className="row1" id="btn4" onClick={() => handleClick("c")}>c</button> */}
+          <button className="row1" id="btn4" onClick={() => handleClick("s")}>s</button>
+          {/* <button className="row2" id="btn8" onClick={() => handleClick("x")}>x</button>
           <button className="row1" id="btn1" onClick={() => handleClick("04")}>0</button>
           <button className="row1" id="btn2" onClick={() => handleClick("03")}>0</button>
           <button className="row1" id="btn3" onClick={() => handleClick("02")}>0</button>
           <button className="row1" id="btn4" onClick={() => handleClick("01")}>0</button>
-          <button className="row1" id="btn4" onClick={() => handleClick("s")}>s</button>
+          <button className="row1" id="btn4" onClick={() => handleClick("s")}>s</button> */}
         </div>
-        <div >
+        {/* <div >
           <button className="row2" id="btn5" onClick={() => handleClick("14")}>1</button>
           <button className="row2" id="btn6" onClick={() => handleClick("13")}>1</button>
           <button className="row2" id="btn7" onClick={() => handleClick("12")}>1</button>
           <button className="row2" id="btn8" onClick={() => handleClick("11")}>1</button>
           <button className="row2" id="btn8" onClick={() => handleClick("x")}>x</button>
+        </div> */}
+        <div className="morse">
+          <ul className="morseList">
+            <li><span>a:{"\xa0\xa0"}.-     </span></li>
+            <li><span>b:{"\xa0\xa0"}-...   </span></li>
+            <li><span>c:{"\xa0\xa0"}-.-.  </span> </li>
+            <li><span>d:{"\xa0\xa0"}-..    </span></li>
+            <li><span>e:{"\xa0\xa0"}.      </span></li>
+            <li><span>f:{"\xa0\xa0"}..-.   </span></li>
+            <li><span>g:{"\xa0\xa0"}--.    </span></li>
+            <li><span>h:{"\xa0\xa0"}....   </span></li>
+            <li><span>i:{"\xa0\xa0"}..     </span></li>
+            <li><span>j:{"\xa0\xa0"}.---   </span></li>
+            <li><span>k:{"\xa0\xa0"}-.-    </span></li>
+            <li><span>l:{"\xa0\xa0"}.-..   </span></li>
+            <li><span>m:{"\xa0\xa0"}--     </span></li>
+            <li><span>n:{"\xa0\xa0"}-.     </span></li>
+            <li><span>o:{"\xa0\xa0"}---    </span></li>
+            <li><span>p:{"\xa0\xa0"}.--.   </span></li>
+            <li><span>q:{"\xa0\xa0"}--.-   </span></li>
+            <li><span>r:{"\xa0\xa0"}.-.    </span></li>
+            <li><span>s:{"\xa0\xa0"}...    </span></li>
+            <li><span>t:{"\xa0\xa0"}-      </span></li>
+            <li><span>u:{"\xa0\xa0"}..-    </span></li>
+            <li><span>v:{"\xa0\xa0"}...-   </span></li>
+            <li><span>w:{"\xa0\xa0"}.--   </span> </li>
+            <li><span>x:{"\xa0\xa0"}-..-   </span></li>
+            <li><span>y:{"\xa0\xa0"}-.--   </span></li>
+            <li><span>z:{"\xa0\xa0"}--..   </span></li>
+            <li><span>.{"\xa0"}:{"\xa0\xa0"}.-.-.-   </span></li>
+            <li><span>'{"\xa0"}:{"\xa0\xa0"}.----.  </span></li>
+            <li><span>,{"\xa0"}:{"\xa0\xa0"}--..--   </span></li>
+            <li><span>!{"\xa0"}:{"\xa0\xa0"}-.-.--   </span></li>
+          </ul>
         </div>
-        
         
       </header>
     </div>
   );
 }
 
-
-
-App();
 
 export default App;

@@ -42,8 +42,8 @@
   position: relative;
   top:-80px;
   display: inline-block;
-  width: 0.8cm; 
-  height: 0.5cm; 
+  width: 1cm; 
+  height: 1cm; 
   text-align: center;
   border: gray;
   background-color: #F18701;
@@ -51,13 +51,16 @@
   cursor: pointer;
   font-weight: bold;
   font-size: 0.4cm;
+  border: #fff;
+  border-style: solid;
+  border-width: 1px;
 }
 .row2{
   position: relative;
   top:-80px;
   display: inline-block;
-  width: 0.8cm; 
-  height: 0.5cm; 
+  width: 1cm; 
+  height: 1cm; 
   text-align: center;
   border: gray;
   background-color: #F18701;
@@ -67,7 +70,24 @@
   font-size: 0.4cm;
 }
 
+.morseList{
+  font-size: 18px;
+  -webkit-column-count: 5;
+  column-count: 5;
+  column-gap: 2cm;
+  text-align: left;
+  
+}
+li {font-size:small;}
+li span {font-size:18px;}
 
+.morse{
+  border-width: 2px;
+  border: #fff;
+  border-style: solid;
+  
+  padding-right: 20px;
+}
 
 /*#demo{
   text-align: left;
