@@ -148,3 +148,8 @@ li span {font-size:18px;}
   font-size: 15px;
   text-align: left;
 }
+#moreinfo {
+  margin-top: -70px;
+  margin-bottom: 50px;
+  font-size: 15px;
+}

@@ -429,6 +429,7 @@ function App() {
           <button className="row1" id="btn3" onClick={() => handleClick("02")}>0</button>
           <button className="row1" id="btn4" onClick={() => handleClick("01")}>0</button>
           <button className="row1" id="btn4" onClick={() => handleClick("s")}>s</button> */}
+          <p id="moreinfo">Press "i" for more information</p>
         </div>
         {/* <div >
           <button className="row2" id="btn5" onClick={() => handleClick("14")}>1</button>
@@ -437,6 +438,7 @@ function App() {
           <button className="row2" id="btn8" onClick={() => handleClick("11")}>1</button>
           <button className="row2" id="btn8" onClick={() => handleClick("x")}>x</button>
         </div> */}
+        
         <div className="morse">
           <ul className="morseList">
             <li><span>a:{"\xa0\xa0"}.-     </span></li>
