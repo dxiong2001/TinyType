@@ -73,6 +73,10 @@ function mapKey(i){
     case '-..-':   return 'x'
     case '-.--':   return 'y'
     case '--..':   return 'z'
+    case '.-.-.-':   return '.'
+    case '.----.':   return '\''
+    case '--..--':   return ','
+    case '-.-.--':   return '!'
     default: return ''
   }
 }
@@ -302,7 +306,7 @@ function handleClick(i) {
         icon: 'info',
         
         title: 'About TinyType',
-        html: 'TinyType is a keyboard free keyboard! <ul class="sw"><li>Use the \"o\" button to type out \n\".\" (short press) or \"-\" (long press) to form letters</li><li>To delete a character, short click on \"x\"</li><li>To move the cursor left, long press on \"x\"</li><li>To press space, short click on \"s\"</li><li>To move the cursor right, long press on \"s\"</li><li>To view info on TinyType, click on \"i\" (which you must have already done to get to this screen)</li><li>*Note: if the cursor is not displayed, then it means it is at the end of the type buffer</li><ul> ',
+        html: 'TinyType is a keyboard free keyboard! <ul class="sw"><li>Use the \"0\" button to type out \n\".\" (short press) or \"-\" (long press) to form letters</li><li>To delete a character, short click on \"x\"</li><li>To move the cursor left, long press on \"x\"</li><li>To press space, short click on \"s\"</li><li>To move the cursor right, long press on \"s\"</li><li>To view info on TinyType, click on \"i\" (which you must have already done to get to this screen)</li><li>*Note: if the cursor is not displayed, then it means it is at the end of the type buffer</li><ul> ',
         showConfirmButton: true,
         allowOutsideClick: false,
       })
@@ -391,13 +395,16 @@ function App() {
     time2 =  new Date().getTime() ;
     if(time2-time1>500 && time1 != 0 && time1 > tempTime){
       s.replace("|", "")
+      let temp = mapKey(x)
       s  = s.slice(0, cursor) + mapKey(x)+ s.slice(cursor, s.length) ;
       document.getElementById("demo").style.opacity = "1";
       document.getElementById("demo").innerHTML = s;
       x="\xa0";
       document.getElementById("demo2").innerHTML = x;
       tempTime = time1;
-      cursor += 1;
+      if(temp !== "" ){
+        cursor += 1;
+      }
     }
     
     
