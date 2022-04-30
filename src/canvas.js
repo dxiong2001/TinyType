@@ -10,7 +10,7 @@ var canvas, ctx, flag = false,
 var w, h = 0;
 
 
-function init() {
+export function init() {
     canvas = document.getElementById('can');
     ctx = canvas.getContext("2d");
     w = canvas.width;
@@ -30,7 +30,7 @@ function init() {
     }, false);
 }
 
-function color(obj) {
+export function color(obj) {
     switch (obj.id) {
         case "green":
             pos_x = "green";
@@ -59,7 +59,7 @@ function color(obj) {
 
 }
 
-function draw() {
+export function draw() {
     ctx.beginPath();
     ctx.moveTo(prevX, prevY);
     ctx.lineTo(currX, currY);
@@ -69,7 +69,7 @@ function draw() {
     ctx.closePath();
 }
 
-function erase() {
+export function erase() {
     var m = window.confirm("Want to clear");
     if (m) {
         ctx.clearRect(0, 0, w, h);
@@ -77,14 +77,14 @@ function erase() {
     }
 }
 
-function save() {
+export function save() {
     document.getElementById("canvasimg").style.border = "2px solid";
     var dataURL = canvas.toDataURL();
     document.getElementById("canvasimg").src = dataURL;
     document.getElementById("canvasimg").style.display = "inline";
 }
 
-function findxy(res, e) {
+export function findxy(res, e) {
     if (res == 'down') {
         prevX = currX;
         prevY = currY;

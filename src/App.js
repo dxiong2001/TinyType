@@ -3,9 +3,10 @@ import './App.css';
 import useLongPress from './longPress'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import * as canvasFunctions from './canvas'
-const MySwal = withReactContent(Swal)
+// import {init, color} from './canvas'
 
+const MySwal = withReactContent(Swal)
+var line =[]
 var menu = 0;
 var x = "";
 var s = "";
@@ -20,32 +21,19 @@ var keys = ["01","11","0201","0211","1201","1211","030201",
 "04030201", "04030211","04031201","04031211","04130201","04130211",
 "04131201","14030201","14030211","14031201","14031211","14130201","14130211","14131201","14131211"]
 
+var init_func = false;
+
+var canvas, ctx, flag = false,
+        prevX = 0,
+        currX = 0,
+        prevY = 0,
+        currY = 0,
+        dot_flag = false;
+var canvas_width, canvas_height = 0
+var pos_x = 0
+var pos_y = 10
 
 
-function recommend(l) {
-  
-  document.getElementById("demo2").innerHTML="";
-  console.log(l)
-  if(l.length===0){
-    document.getElementById("demo2").innerHTML += "<li>  \xa0 </li>"
-  }
-  for(let i=0; i< l.length; i++){
-    document.getElementById("demo2").innerHTML += "<li> [" +mapKey(l[i])+"]: "+ mapBinary(l[i]) + "</li>";
-    //console.log(l[i])
-  }
-}
-
-function match(i){
-  m = []
-  for(let j = 0; j< keys.length; j++){
-    if(keys[j].includes(i) && i[1]>=keys[j][1]){
-      
-      m.push(keys[j])
-    }
-  }
-  console.log(m)
-  return m;
-}
 
 function mapKey(i){
   switch(i){
@@ -85,96 +73,6 @@ function mapKey(i){
 
 
 
-function mapBinary(i){
-  switch(i){
-    case "01":
-      return "0"
-    case "11":
-      return "1"
-    case "0201":
-      return "00"
-    case "0211":
-      return "01"
-    case "1201":
-      return "10"
-    case "1211":
-      return "11"
-    case "030201":
-      return "000"
-    case "030211":
-      return "001"
-    case "031201":
-      return "010"
-    case "031211":
-      return "011"
-    case "130201":
-      return "100"
-    case "130211":
-      return "101"
-    case "131201":
-      return "110"
-    case "131211":
-      return "111"
-    case "04030201":
-      return "0000"
-    case "04030211":
-      return "0001"
-    case "04031201":
-      return "0010"
-    case "04031211":
-      return "0011"
-    case "04130201":
-      return "0100"
-    case "04130211":
-      return "0101"
-    case "04131201":
-      return "0110"
-    case "04131211":
-      return "0111"
-    case "14030201":
-      return "1000"
-    case "14030211":
-      return "1001"
-    case "14031201":
-      return "1010"
-    case "14031211":
-      return "1011"
-    case "14130201":
-      return "1100"
-    case "14130211":
-      return "1101"
-    case "14131201":
-      return "1110"
-    case "14131211":
-      return "1111"
-    default:
-      
-      return "\xa0"  
-  }
-}
-
-function mapButton(i){
-  switch(i){
-    case "01":
-      return "btn4";
-    case "02":
-      return "btn3";
-    case "03":
-      return "btn2";
-    case "04":
-      return "btn1";
-    case "11":
-      return "btn8";
-    case "12":
-      return "btn7";
-    case "13":
-      return "btn6";
-    case "14":
-      return "btn5";
-    default:
-      return "\xa0"
-  }
-}
 
 function handleClick(i) {
     if(x==="\xa0"){
@@ -258,20 +156,12 @@ function handleClick(i) {
     }
 }
 
-// function tab(i){
-//   if(i===0){
-//     document.getElementById("myDropdown2").classList.add("hidden")
-//     document.getElementById("myDropdown").classList.add("show")
-//   }
-//   else if(i===1){
-//     document.getElementById("myDropdown").classList.remove("show")
-//     document.getElementById("myDropdown2").classList.add("show")
-//   }
-// }
+
 function tab(index){
   document.querySelector('#container>.active').classList.remove('active');
   document.querySelector(`#container>:nth-child(${index + 1})`).classList.add('active');
 }
+
 function App() {
   
   
@@ -319,8 +209,15 @@ function App() {
       if(temp !== "" ){
         cursor += 1;
       }
-    }
     
+    }
+    if(!init_func){
+      console.log("testing")
+      if(document.getElementById('can')!==null){
+        init()
+        init_func = true
+      }
+    }
     
     // console.log(time1)
     // console.log(time2)
@@ -346,7 +243,7 @@ function App() {
         
         <div id="container">
           <div class="active">
-              <div class="tab2">
+              <div className="tab1">
                 <button className="row1" id="btn1" {...longPressProps1}>x</button>
                 <button className="row1" id="btn2" {...longPressProps}>0</button>
                 
@@ -387,7 +284,14 @@ function App() {
               </div>
               </div>
           </div>
-          <div>Content of Tab 2</div>
+          <div>
+            <div >
+              <div className="tab2">
+                <canvas className="canvas" id="can"></canvas>
+                <img id="canvasimg" ></img>
+              </div>
+            </div>
+          </div>
         </div>
         {/*  */}
       
@@ -397,6 +301,87 @@ function App() {
       </header>
     </div>
   );
+}
+
+
+
+function init() {
+  console.log("testttt")
+  canvas = document.getElementById('can');
+  ctx = canvas.getContext("2d");
+  canvas_width = canvas.width;
+  canvas_height = canvas.height;
+
+  canvas.addEventListener("mousemove", function (e) {
+      findxy('move', e)
+  }, false);
+  canvas.addEventListener("mousedown", function (e) {
+      findxy('down', e)
+  }, false);
+  canvas.addEventListener("mouseup", function (e) {
+      findxy('up', e)
+  }, false);
+  canvas.addEventListener("mouseout", function (e) {
+      findxy('out', e)
+  }, false);
+}
+function Point(x, y) // constructor
+{
+	this.X = x;
+	this.Y = y;
+}
+
+function findxy(res, e) {
+  var rect = canvas.getBoundingClientRect();
+  var scaleX = canvas.width / rect.width;    // relationship bitmap vs. element for x
+  var scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for y
+  if (res == 'down') {
+      ctx.clearRect(0, 0, canvas_width, canvas_height);
+      document.getElementById("canvasimg").style.display = "none";
+      line = []
+      prevX = currX;
+      prevY = currY;
+      currX = (e.clientX - rect.left)*scaleX;
+      currY = (e.clientY - rect.top)*scaleY;
+      line.push(new Point(Math.round(currX), Math.round(currY)))
+
+      flag = true;
+      dot_flag = true;
+      if (dot_flag) {
+          ctx.beginPath();
+          ctx.fillStyle = pos_x;
+          ctx.fillRect(currX, currY, 2, 2);
+          ctx.closePath();
+          dot_flag = false;
+      }
+  }
+  if (res == 'up' || res == "out") {
+      flag = false;
+      console.log(line)
+      
+  }
+  if (res == 'move') {
+      
+      
+      if (flag) {
+          prevX = currX;
+          prevY = currY;
+          currX = (e.clientX - rect.left)*scaleX;
+          currY = (e.clientY - rect.top)*scaleY;
+          line.push(new Point(Math.round(currX), Math.round(currY)))
+          draw();
+      }
+  }
+}
+
+function draw() {
+  ctx.beginPath();
+  ctx.moveTo(prevX, prevY);
+  ctx.lineTo(currX, currY);
+  ctx.strokeStyle = pos_x;
+  ctx.lineWidth = pos_y;
+  ctx.stroke();
+  ctx.closePath();
 }
 
 

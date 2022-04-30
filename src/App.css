@@ -35,6 +35,8 @@
   border-style: solid;
   color: #fff;
   border-width: 1px;
+  
+ 
 }
 
 
@@ -44,7 +46,7 @@
   /* top:-80px; */
   display: inline-block;
   width: 1cm; 
-  height: 0.8cm; 
+  height: 0.6cm; 
   text-align: center;
   border: gray;
   background-color: #F18701;
@@ -163,11 +165,11 @@ li span {font-size:18px;}
   font-size: 15px;
 } */
 
-#tab2 {
-  border-color: #fff;
-  border-width: 2mm;
-  border:solid;
+.tab1 {
+  
+  border: 3px solid white;
 }
+
 #tabs{
   left:-18px;
   position:relative;
@@ -183,6 +185,7 @@ li span {font-size:18px;}
 }
 
 #container>div {
+  
   width: 700px;
   height: 240px;
   padding: 10px;
@@ -192,87 +195,18 @@ li span {font-size:18px;}
 
 #container>div.active {
   display: block;
-}
-
-
-
-.dropbtn {
-  background-color: #3498DB;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-.dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-  /* background-color: #6622CC; */
   
 }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  left:-173px;
-  background-color:#6622CC;
-  min-width: 160px;
-  overflow: auto;
-  border: #fff;
-  border-style: solid;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
 
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
 
-.dropdown a:hover {background-color: #ddd;}
 
-.show {display: block;}
-
-.dropdown2-content {
-  display: none;
-  position: absolute;
-  left:-173px;
-  background-color:#6622CC;
-  min-width: 160px;
-  overflow: auto;
-  border: #fff;
-  border-style: solid;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown2-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown2 a:hover {background-color: #ddd;}
-.hidden {
-  display: none;
-}
-.show {display: block;}
-
-#canvas{
-  width : 400px;
-  height: 400px;
-  position: absolute;
-  border-width: 2px;
-  border:solid;
-  border-color: #fff;
+#can{
+  width : 1.5cm;
+  height: 1.5cm;
   
+  /* border-width: 2px; */
+  
+  background-color:#ffffff;
 
 }
