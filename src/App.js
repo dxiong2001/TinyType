@@ -2,25 +2,19 @@
 import './App.css';
 import useLongPress from './longPress'
 import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import Mediastream from './mediastream'
 // import {init, color} from './canvas'
 
-const MySwal = withReactContent(Swal)
-var line =[]
-var menu = 0;
+
+var line =[];
 var x = "";
 var s = "";
-var emoji = false;
+var emoji = false; 
 var tabNum = 0;
 var time1 = 0;
 var time2 = 0;
 var tempTime = 0;
-var m = []
 var cursor = 0;
-var keys = ["01","11","0201","0211","1201","1211","030201",
-"030211","031201","031211","130201","130211","131201","131211",
-"04030201", "04030211","04031201","04031211","04130201","04130211",
-"04131201","14030201","14030211","14031201","14031211","14130201","14130211","14131201","14131211"]
 
 var init_func = false;
 
@@ -230,6 +224,10 @@ function App() {
     onClick: () => tab(1),
     onLongPress: () => handleClick("i"),
   });
+  const longPressProps6 = useLongPress({
+    onClick: () => tab(2),
+    onLongPress: () => handleClick("i"),
+  });
 
   setInterval(function() {
     //console.log("test");
@@ -282,10 +280,10 @@ function App() {
         
         <p><ul id = "demo2"><li><span>{"\xa0"}</span></li></ul></p>
         <ul id="tabs">
-          <li><button className="row0" id="btn4" {...longPressProps4}>type</button></li>
+          <li><button className="row0" id="btn4" {...longPressProps4}>📝</button></li>
           <li><button className="row0" id="btn4" {...longPressProps3}>i</button></li>
-          <li><button className="row0" id="btn4" {...longPressProps5}>emoji</button></li>
-          
+          <li><button className="row0" id="btn4" {...longPressProps5}>😃</button></li>
+          <li><button className="row0" id="btn4" {...longPressProps6}>📷</button></li>
         </ul>
         
         <div id="container">
@@ -337,7 +335,12 @@ function App() {
                 <canvas className="canvas" id="can"></canvas>
                 <img id="canvasimg" ></img>
               </div>
+              
             </div>
+            
+          </div>
+          <div className="tab3">
+            <Mediastream></Mediastream>
           </div>
         </div>
         {/*  */}
