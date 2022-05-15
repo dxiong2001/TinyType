@@ -36,6 +36,14 @@ import point_left from "./img/point_left.png";
 import point_right from "./img/point_right.png";
 import raised_fist from "./img/raised_fist.png";
 
+var emo = "";
+var count = 0;
+export function getEmoji(){
+    return emo;
+}
+export function getCount(){
+    return count;
+}
 
 function Mediastream() {
   const webcamRef = useRef(null);
@@ -112,7 +120,19 @@ function Mediastream() {
           const maxConfidence = confidence.indexOf(
             Math.max.apply(null, confidence)
           );
-          setEmoji(gesture.gestures[maxConfidence].name);
+          
+          console.log(gesture.gestures[maxConfidence].name)
+          if(emo === gesture.gestures[maxConfidence].name){
+              count+=1;
+          }
+          else{
+              count = 0;
+          }
+          if(count>5){
+            // setEmoji(gesture.gestures[maxConfidence].name);
+          }
+          emo = gesture.gestures[maxConfidence].name
+          console.log(count)
         }
       }
 
@@ -135,11 +155,11 @@ function Mediastream() {
             marginRight: "auto",
             left: 0,
             right: 0,
-            bottom: 150,
+            bottom: 100,
             textAlign: "center",
             zindex: 9,
-            width: 300,
-            height: 300
+            width: 250,
+            height: 250
           }} />
         <canvas ref={canvasRef}
           style={{
@@ -148,11 +168,11 @@ function Mediastream() {
             marginRight: "auto",
             left: 0,
             right: 0,
-            bottom: 150,
+            bottom: 100,
             textAlign: "center",
             zindex: 9,
-            width: 300,
-            height: 300
+            width: 250,
+            height: 250
           }} />
 
         {emoji !== null ? (
@@ -162,8 +182,8 @@ function Mediastream() {
               position: "absolute",
               marginLeft: "auto",
               marginRight: "auto",
-              left: 400,
-              bottom: 500,
+              left: 350,
+              bottom: 250,
               right: 0,
               textAlign: "center",
               height: 100,

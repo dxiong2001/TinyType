@@ -2,7 +2,7 @@
 import './App.css';
 import useLongPress from './longPress'
 import Swal from 'sweetalert2'
-import Mediastream from './mediastream'
+import Mediastream, {getEmoji, getCount} from './mediastream'
 // import {init, color} from './canvas'
 
 
@@ -185,12 +185,63 @@ function handleClick(i) {
     }
     
 }
-
+var newgesture = true;
+function gesture(){
+  var emoji1 = getEmoji()
+  console.log(emoji1)
+  if(newgesture && getCount()>5){
+    
+    
+    console.log(typeof(emoji1))
+    document.getElementById("demo").style.opacity = "1";
+    if(emoji1==="thumbs_up"){
+      s+="👍"
+      
+    }
+    else if(emoji1==="thumbs_down"){
+      s+="👎"
+      
+    }
+    else if(emoji1==="victory"){
+      s+="✌"
+      
+    }
+    else if(emoji1==="raised_hand"){
+      s+="✋"
+      
+    }
+    else if(emoji1==="point_left"){
+      s+="👈"
+      
+    }
+    else if(emoji1==="point_right"){
+      s+="👉"
+      
+    }
+    else if(emoji1==="point_up"){
+      s+="☝"
+      
+    }
+    else if(emoji1==="rock_on" || emoji1==="love_you"){
+      s+="🤟"
+      
+    }else{
+      s=s;
+    }
+    emoji = true;
+    newgesture = false;
+    document.getElementById("demo").innerHTML = s;
+  }
+  if(getCount()===0){
+    newgesture = true;
+  }
+}
 
 function tab(index){
   document.querySelector('#container>.active').classList.remove('active');
   document.querySelector(`#container>:nth-child(${index + 1})`).classList.add('active');
   tabNum = index;
+  
 }
 
 function App() {
@@ -248,7 +299,7 @@ function App() {
     
     }
     if(!init_func){
-      console.log("testing")
+      
       if(document.getElementById('can')!==null){
         init()
         init_func = true
@@ -268,7 +319,10 @@ function App() {
     // console.log(time2)
     // console.log("tt:"+tempTime)
   }, 500);
-
+  setInterval(function(){
+    gesture();
+    console.log("testing")
+  },1)
   return (
     <div className="App">
       <header className="App-header">
@@ -385,7 +439,7 @@ function write(i){
 }
 
 function init() {
-  console.log("testttt")
+  
   canvas = document.getElementById('can');
   ctx = canvas.getContext("2d");
   canvas_width = canvas.width;
